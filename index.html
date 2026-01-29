@@ -1,25 +1,43 @@
-<script>
-let started = false;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Test Sound</title>
+  <style>
+    body {
+      height: 100vh;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: Arial, sans-serif;
+      cursor: pointer;
+      background: #222;
+      color: white;
+      font-size: 2rem;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  Click anywhere to play sound!
 
-document.body.addEventListener("click", function() {
-  if (started) return;
-  started = true;
+  <script>
+    let started = false;
 
-  const audio = new Audio('ahhh.mp3');  // filename must be exact
-  audio.volume = 1.0;
-  audio.play();
+    document.body.addEventListener("click", () => {
+      if (started) return;
+      started = true;
 
-  // Optional fullscreen for extra troll
-  if (document.documentElement.requestFullscreen) {
-    document.documentElement.requestFullscreen();
-  }
+      const audio = new Audio('ahhh.mp3');
+      audio.volume = 1.0;
 
-  // Optional alert spam
-  setInterval(() => {
-    alert("AHHHHHH 🔊");
-  }, 3000);
+      audio.play().catch(e => {
+        console.error("Audio play failed:", e);
+      });
 
-  // Optional change text after click
-  document.body.innerHTML = "<h1>AHHHHHHH 😈</h1>";
-});
-</script>
+      document.body.innerHTML = "<h1>AHHHHHHH 😈</h1>";
+    });
+  </script>
+</body>
+</html>
