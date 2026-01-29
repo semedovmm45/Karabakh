@@ -7,74 +7,52 @@
     body {
       margin: 0;
       height: 100vh;
+      background: #f0f0f0;
       display: flex;
       justify-content: center;
       align-items: center;
       font-family: Arial, sans-serif;
-      background: black;
-      color: white;
       cursor: pointer;
+      color: black;
+      font-size: 2em;
     }
     h1 {
-      font-size: 3rem;
-      animation: shake 0.1s infinite;
-    }
-    @keyframes shake {
-      0% { transform: translate(2px, 2px); }
-      25% { transform: translate(-2px, 2px); }
-      50% { transform: translate(2px, -2px); }
-      75% { transform: translate(-2px, -2px); }
-      100% { transform: translate(2px, 2px); }
+      text-align: center;
     }
   </style>
 </head>
 <body>
 
-<h1>CLICK ANYWHERE ??</h1>
+<h1>Click anywhere to continue</h1>
 
 <script>
 let started = false;
-let audioCtx;
-let oscillator;
-let gain;
 
-function startTroll() {
+document.body.addEventListener("click", function() {
   if (started) return;
   started = true;
 
   // Fullscreen
-  document.documentElement.requestFullscreen();
+  if (document.documentElement.requestFullscreen) {
+    document.documentElement.requestFullscreen();
+  }
 
-  // Audio
-  audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-  oscillator = audioCtx.createOscillator();
-  gain = audioCtx.createGain();
+  // Play custom sound
+  const audio = new Audio('ahhh.mp3'); // <- your sound file here
+  audio.volume = 1.0;
+  audio.play();
 
-  oscillator.type = "sawtooth"; // nasty sound
-  oscillator.frequency.setValueAtTime(55, audioCtx.currentTime); // bass freq
-  gain.gain.value = 1.5;
+  // Make leaving annoying
+  window.onbeforeunload = () => "NO ESCAPE 😈";
 
-  oscillator.connect(gain);
-  gain.connect(audioCtx.destination);
-  oscillator.start();
-
-  // Vibrato / chaos
+  // Optional: spam alert every 3 seconds
   setInterval(() => {
-    oscillator.frequency.value = 40 + Math.random() * 40;
-  }, 50);
-
-  // Exit trolling
-  window.onbeforeunload = function () {
-    return "NOPE ??";
-  };
-
-  // Popup spam
-  setInterval(() => {
-    alert("AHHHHHHH ??");
+    alert("AHHHHHH 🔊");
   }, 3000);
-}
 
-document.body.addEventListener("click", startTroll);
+  // Optional: change the page text
+  document.body.innerHTML = "<h1>AHHHHHHHH 😈</h1>";
+});
 </script>
 
 </body>
